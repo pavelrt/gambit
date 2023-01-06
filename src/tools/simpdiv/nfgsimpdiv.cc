@@ -73,7 +73,7 @@ RandomProfiles(const Game &p_game, int p_count, const Rational &denom)
 void PrintBanner(std::ostream &p_stream)
 {
   p_stream << "Compute Nash equilibria using simplicial subdivision\n";
-  p_stream << "Gambit version " VERSION ", Copyright (C) 1994-2022, The Gambit Project\n";
+  p_stream << "Gambit version , Copyright (C) 1994-2022, The Gambit Project\n";
   p_stream << "This is free software, distributed under the GNU GPL\n\n";
 }
 

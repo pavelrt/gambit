@@ -1,6 +1,0 @@
-EFG 2 R "A small test game without perfect recall" { "Player 1" }
-""
-
-p "" 1 1 "" { "1" } 0
-p "" 1 1 "" { "1" } 0
-t "" 0

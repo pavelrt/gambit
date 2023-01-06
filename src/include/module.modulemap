@@ -1,0 +1,4 @@
+module gambit {
+  header "gambit_c_api.h"
+  export *
+}

@@ -137,7 +137,7 @@ gbtNfgHs::gbtNfgHs(int p_stopAfter)
   : m_iteratedRemoval(true), m_removalWhenUninstantiated(1),
     m_ordering("automatic")
 #ifdef DEBUG
-  , m_logfile(std::cerr)
+  , m_logfile(std::cerr.rdbuf())
 #endif // DEBUG
 {
   m_stopAfter = p_stopAfter;
