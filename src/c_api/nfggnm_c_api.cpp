@@ -24,7 +24,7 @@ RandomStrategyPerturbations(const Game &p_game, int p_count)
   return profiles;
 }
 
-int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_strats, int number_of_perturbations, double *&equilibriums_buffer, int &equilibriums_buffer_size, int &number_of_equilibriums) {
+int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_strats, int number_of_perturbations, double **equilibriums_buffer, int &equilibriums_buffer_size, int &number_of_equilibriums) {
   bool quiet = false, verbose = false;
   try {
     Array<int> dim(num_players);
@@ -76,10 +76,10 @@ int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_st
       }
     }
     equilibriums_buffer_size = (int) equilibriums_data.size();
-    equilibriums_buffer = (double *) malloc(equilibriums_buffer_size * sizeof(double));
+    *equilibriums_buffer = (double *) malloc(equilibriums_buffer_size * sizeof(double));
     int i = 0;
     for (const auto value: equilibriums_data) {
-      equilibriums_buffer[i] = value;
+      *equilibriums_buffer[i] = value;
       i++;
     }
     return 0;

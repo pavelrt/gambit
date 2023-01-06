@@ -9,7 +9,7 @@ extern "C"
 {
 #endif
 
-int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_strats, int number_of_perturbations, double *&equilibriums_buffer, int &equilibriums_buffer_size, int &number_of_equilibriums);
+int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_strats, int number_of_perturbations, double **equilibriums_buffer, int &equilibriums_buffer_size, int &number_of_equilibriums);
 
 
 
