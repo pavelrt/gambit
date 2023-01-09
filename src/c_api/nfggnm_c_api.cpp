@@ -8,6 +8,7 @@
 #include <iostream>
 #include "gambit.h"
 #include "solvers/gnm/gnm.h"
+#include "../include/gambit_c_api.h"
 
 using namespace Gambit;
 using namespace Gambit::Nash;
@@ -24,7 +25,7 @@ RandomStrategyPerturbations(const Game &p_game, int p_count)
   return profiles;
 }
 
-int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_strats, int number_of_perturbations, double **equilibriums_buffer, int *equilibriums_buffer_size, int *number_of_equilibriums) {
+double* nfggnm_c(const int num_players, const double *pay_off_data, const int data_length, const int *num_strats, const int number_of_perturbations, int *equilibriums_buffer_size, int *number_of_equilibriums) {
   bool quiet = false, verbose = false;
   try {
     Array<int> dim(num_players);
@@ -62,7 +63,7 @@ int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_st
       auto equilibriumsFoundIter = solver.Solve(game, perts[i]);
       for (int i = 0; i < equilibriumsFoundIter.size(); i++) {
       //for (const auto eq: equilibriumsFoundIter) {
-        equilibriumsFound.push_back(equilibriumsFoundIter[i]);
+        equilibriumsFound.push_back(equilibriumsFoundIter[i + 1]);
       }
     }
     
@@ -71,21 +72,21 @@ int nfggnm_c(int num_players, double *pay_off_data, int data_length, int *num_st
     for (const auto eq: equilibriumsFound) {
       for (const auto player: eq.GetGame()->Players()) {
         for (const auto strategy: player->Strategies()) {
-          equilibriums_data.push_back(eq.GetPayoff(strategy));
+          equilibriums_data.push_back(eq[strategy]);
         }
       }
     }
     *equilibriums_buffer_size = (int) equilibriums_data.size();
-    *equilibriums_buffer = (double *) malloc(*equilibriums_buffer_size * sizeof(double));
+    auto equilibriums_buffer = (double *) malloc(*equilibriums_buffer_size * sizeof(double));
     int i = 0;
     for (const auto value: equilibriums_data) {
-      *equilibriums_buffer[i] = value;
+      equilibriums_buffer[i] = value;
       i++;
     }
-    return 0;
+    return equilibriums_buffer;
   }
   catch (std::runtime_error &e) {
     std::cerr << "Error: " << e.what() << std::endl;
-    return 1;
+    return 0;
   }
 }
